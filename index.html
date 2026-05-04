@@ -7,9 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #faf8f5; --bg-surface: #ffffff; --bg-inset: #f3f0ec; --bg-hover: #edeae5;
-  --border: #ddd8d0; --border-strong: #c5bfb5; --text: #1a1815;
-  --text-secondary: #5c574e; --text-muted: #9a9489;
+  --bg: #faf8f5; --bg-surface: #ffffff; --bg-inset: #f3f0ec;
+  --border: #ddd8d0; --border-strong: #c5bfb5;
+  --text: #1a1815; --text-secondary: #5c574e; --text-muted: #9a9489;
   --accent: #b44a2d; --accent-light: rgba(180,74,45,0.08); --accent-border: rgba(180,74,45,0.25);
   --ink: #2c2824; --radius: 10px;
   --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.06);
@@ -19,59 +19,47 @@
 body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(180,160,140,0.04) 27px, rgba(180,160,140,0.04) 28px); pointer-events: none; z-index: 0; }
 
-/* ── Main view ── */
 #main-view { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 64px 28px 80px; }
 .header { text-align: center; margin-bottom: 52px; }
 .header h1 { font-family: 'Cormorant Garamond', serif; font-size: 46px; font-weight: 700; color: var(--ink); letter-spacing: -0.5px; }
 .header .subtitle { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; color: var(--text-muted); margin-top: 10px; }
-
 .cat-header { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 22px; margin-top: 44px; }
 .cat-header:first-of-type { margin-top: 0; }
+.eq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
 
-.eq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; margin-bottom: 8px; }
-
-/* ── Equation cards ── */
-.eq-card { cursor: pointer; display: flex; flex-direction: column; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; user-select: none; }
+.eq-card { cursor: pointer; display: flex; flex-direction: column; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; user-select: none; }
 .eq-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--accent-border); }
-.eq-titlebar { display: flex; align-items: center; gap: 6px; padding: 11px 14px; background: var(--bg-inset); border-bottom: 1px solid var(--border); transition: background 0.2s ease; }
+.eq-titlebar { display: flex; align-items: center; gap: 6px; padding: 11px 14px; background: var(--bg-inset); border-bottom: 1px solid var(--border); transition: background 0.2s; }
 .eq-card:hover .eq-titlebar { background: var(--accent); }
 .eq-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
 .dot-r { background: #ff5f57; } .dot-y { background: #febc2e; } .dot-g { background: #28c840; }
-.eq-titlebar-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.4px; color: var(--text-muted); margin-left: 6px; transition: color 0.2s ease; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.eq-titlebar-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); margin-left: 6px; transition: color 0.2s; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .eq-card:hover .eq-titlebar-label { color: rgba(255,255,255,0.75); }
 .eq-preview { padding: 22px 18px; background: var(--bg); display: flex; align-items: center; justify-content: center; min-height: 88px; border-bottom: 1px solid var(--border); }
 .eq-formula { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; font-style: italic; color: var(--ink); text-align: center; line-height: 1.4; }
 .eq-formula sub, .eq-formula sup { font-size: 0.58em; }
-.eq-info { padding: 14px 16px 16px; background: var(--bg-surface); }
+.eq-info { padding: 14px 16px 16px; }
 .eq-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
 .eq-desc { font-size: 11.5px; color: var(--text-secondary); line-height: 1.5; }
 .eq-cta { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--accent); margin-top: 8px; }
 
-/* ── Solver view ── */
 #solver-view { display: none; position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 48px 28px 80px; }
-
-.back-btn { position: fixed; top: 22px; left: 22px; width: 42px; height: 42px; border: 1px solid var(--border); border-radius: 50%; background: var(--bg-surface); color: var(--text-secondary); font-size: 19px; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: var(--shadow); transition: all 0.15s; z-index: 100; text-decoration: none; }
-.back-btn:hover { border-color: var(--accent-border); color: var(--accent); box-shadow: var(--shadow-hover); transform: translateX(-2px); }
-
+#back-btn { position: fixed; top: 22px; left: 22px; width: 42px; height: 42px; border: 1px solid var(--border); border-radius: 50%; background: var(--bg-surface); color: var(--text-secondary); font-size: 19px; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: var(--shadow); transition: all 0.15s; z-index: 100; }
+#back-btn:hover { border-color: var(--accent-border); color: var(--accent); box-shadow: var(--shadow-hover); transform: translateX(-2px); }
 .solver-head { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 2px solid var(--border); }
-.solver-name { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 700; color: var(--ink); letter-spacing: -0.5px; }
+.solver-name { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 700; color: var(--ink); }
 .solver-eq { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; font-style: italic; color: var(--accent); margin: 8px 0 5px; }
 .solver-eq sub, .solver-eq sup { font-size: 0.58em; }
 .solver-sub { font-size: 13px; color: var(--text-muted); }
-
 .panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
 .panel-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 16px; }
-
-/* ── Solve-for buttons ── */
 .sfgrid { display: flex; flex-wrap: wrap; gap: 8px; }
-.sf-btn { padding: 9px 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-inset); font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; font-weight: 700; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.sf-btn { padding: 9px 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-inset); font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; font-weight: 700; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .sf-btn sub, .sf-btn sup { font-size: 0.58em; }
-.sf-hint { font-family: 'JetBrains Mono', monospace; font-size: 8px; font-style: normal; font-weight: 400; color: var(--text-muted); letter-spacing: 0.3px; }
+.sf-hint { font-family: 'JetBrains Mono', monospace; font-size: 8px; font-style: normal; font-weight: 400; color: var(--text-muted); }
 .sf-btn:hover { border-color: var(--accent-border); background: var(--accent-light); color: var(--accent); }
 .sf-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 .sf-btn.active .sf-hint { color: rgba(255,255,255,0.65); }
-
-/* ── Input fields ── */
 .inputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .inp-group label { display: block; margin-bottom: 7px; }
 .inp-lbl { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; font-weight: 700; color: var(--ink); }
@@ -80,11 +68,8 @@ body::before { content: ''; position: fixed; inset: 0; background: repeating-lin
 .field { width: 100%; padding: 11px 14px; border: 2px solid var(--border); border-radius: var(--radius); background: var(--bg-surface); color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 15px; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
 .field:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
 .field::placeholder { color: var(--text-muted); font-size: 12px; }
-
 .calc-btn { width: 100%; padding: 13px; border: none; border-radius: var(--radius); font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; background: var(--accent); color: #fff; margin-top: 18px; transition: all 0.15s; }
 .calc-btn:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(180,74,45,0.2); }
-
-/* ── Result ── */
 #result-panel { display: none; }
 .res-banner { display: flex; align-items: center; gap: 10px; padding: 13px 18px; border-radius: var(--radius); margin-bottom: 14px; font-weight: 600; font-size: 14px; }
 .res-banner.ok  { background: rgba(45,122,79,0.07); border: 1px solid rgba(45,122,79,0.22); color: #2d7a4f; }
@@ -98,20 +83,18 @@ body::before { content: ''; position: fixed; inset: 0; background: repeating-lin
 .steps h4 { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 10px; }
 .step { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-secondary); padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.04); line-height: 1.6; }
 .step:last-child { border-bottom: none; }
-
 @media (max-width: 600px) {
   .eq-grid { grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 14px; }
   .inputs-grid { grid-template-columns: 1fr; }
   .header h1, .solver-name { font-size: 32px; }
-  .back-btn { top: 12px; left: 12px; width: 38px; height: 38px; font-size: 16px; }
+  #back-btn { top: 12px; left: 12px; width: 38px; height: 38px; font-size: 16px; }
 }
 </style>
 </head>
 <body>
 
-<button class="back-btn" id="back-btn" onclick="showMain()">&#8592;</button>
+<button id="back-btn" onclick="showMain()">&#8592;</button>
 
-<!-- ── MAIN VIEW ── -->
 <div id="main-view">
   <header class="header">
     <h1>UAM solver</h1>
@@ -123,25 +106,21 @@ body::before { content: ''; position: fixed; inset: 0; background: repeating-lin
   <div class="eq-grid" id="circular-grid"></div>
 </div>
 
-<!-- ── SOLVER VIEW ── -->
 <div id="solver-view">
   <header class="solver-head">
     <div class="solver-name" id="sv-name"></div>
     <div class="solver-eq" id="sv-eq"></div>
     <div class="solver-sub" id="sv-sub"></div>
   </header>
-
   <div class="panel">
     <div class="panel-label">Solve For</div>
     <div class="sfgrid" id="sf-grid"></div>
   </div>
-
   <div class="panel">
     <div class="panel-label">Known Values</div>
     <div class="inputs-grid" id="inputs-grid"></div>
     <button class="calc-btn" onclick="calculate()">Calculate</button>
   </div>
-
   <div class="panel" id="result-panel">
     <div class="panel-label">Result</div>
     <div id="result-body"></div>
@@ -149,402 +128,389 @@ body::before { content: ''; position: fixed; inset: 0; background: repeating-lin
 </div>
 
 <script>
-const EQ = {
-  linear: [
-    {
-      id: 'l1', name: 'velocity–time',
-      html: 'v = v<sub>0</sub> + at',
-      desc: 'Final velocity from initial velocity, acceleration, and time',
-      vars: [
-        { sym:'v',  html:'v',             name:'final velocity',   unit:'m/s'  },
-        { sym:'v0', html:'v<sub>0</sub>', name:'initial velocity', unit:'m/s'  },
-        { sym:'a',  html:'a',             name:'acceleration',     unit:'m/s²' },
-        { sym:'t',  html:'t',             name:'time',             unit:'s'    },
-      ],
-      solve: {
-        v:  k => R( k.v0+k.a*k.t,        ['v = v₀ + at', `= ${k.v0} + (${k.a})(${k.t})`] ),
-        v0: k => R( k.v-k.a*k.t,         ['v₀ = v − at', `= ${k.v} − (${k.a})(${k.t})`] ),
-        a:  k => R( (k.v-k.v0)/k.t,      ['a = (v − v₀) / t', `= (${k.v} − ${k.v0}) / ${k.t}`] ),
-        t:  k => R( (k.v-k.v0)/k.a,      ['t = (v − v₀) / a', `= (${k.v} − ${k.v0}) / ${k.a}`] ),
-      }
-    },
-    {
-      id: 'l2', name: 'displacement (no v)',
-      html: 's = v<sub>0</sub>t + ½at<sup>2</sup>',
-      desc: 'Displacement without knowing final velocity',
-      vars: [
-        { sym:'s',  html:'s',             name:'displacement',     unit:'m'    },
-        { sym:'v0', html:'v<sub>0</sub>', name:'initial velocity', unit:'m/s'  },
-        { sym:'a',  html:'a',             name:'acceleration',     unit:'m/s²' },
-        { sym:'t',  html:'t',             name:'time',             unit:'s'    },
-      ],
-      solve: {
-        s:  k => R( k.v0*k.t + 0.5*k.a*k.t**2,          ['s = v₀t + ½at²', `= (${k.v0})(${k.t}) + ½(${k.a})(${k.t})²`] ),
-        v0: k => R( (k.s - 0.5*k.a*k.t**2) / k.t,        ['v₀ = (s − ½at²) / t', `= (${k.s} − ½(${k.a})(${k.t})²) / ${k.t}`] ),
-        a:  k => R( 2*(k.s - k.v0*k.t) / k.t**2,         ['a = 2(s − v₀t) / t²', `= 2(${k.s} − (${k.v0})(${k.t})) / (${k.t})²`] ),
-        t:  k => quadratic(k.a/2, k.v0, -k.s,             's = v₀t + ½at²  →  ½at² + v₀t − s = 0'),
-      }
-    },
-    {
-      id: 'l3', name: 'timeless equation',
-      html: 'v<sup>2</sup> = v<sub>0</sub><sup>2</sup> + 2as',
-      desc: 'Velocity, acceleration, displacement — no time needed',
-      vars: [
-        { sym:'v',  html:'v',             name:'final velocity',   unit:'m/s'  },
-        { sym:'v0', html:'v<sub>0</sub>', name:'initial velocity', unit:'m/s'  },
-        { sym:'a',  html:'a',             name:'acceleration',     unit:'m/s²' },
-        { sym:'s',  html:'s',             name:'displacement',     unit:'m'    },
-      ],
-      solve: {
-        v:  k => { const q=k.v0**2+2*k.a*k.s; if(q<0) throw'v² < 0 — no real solution'; return R(Math.sqrt(q), ['v = √(v₀² + 2as)', `= √(${k.v0}² + 2·${k.a}·${k.s}) = √${q}`]); },
-        v0: k => { const q=k.v**2-2*k.a*k.s;  if(q<0) throw'v₀² < 0 — no real solution'; return R(Math.sqrt(q), ['v₀ = √(v² − 2as)', `= √(${k.v}² − 2·${k.a}·${k.s}) = √${q}`]); },
-        a:  k => R( (k.v**2-k.v0**2)/(2*k.s), ['a = (v² − v₀²) / (2s)', `= (${k.v}² − ${k.v0}²) / (2·${k.s})`] ),
-        s:  k => R( (k.v**2-k.v0**2)/(2*k.a), ['s = (v² − v₀²) / (2a)', `= (${k.v}² − ${k.v0}²) / (2·${k.a})`] ),
-      }
-    },
-    {
-      id: 'l4', name: 'average velocity',
-      html: 's = ½(v + v<sub>0</sub>)t',
-      desc: 'Displacement via average velocity — no acceleration needed',
-      vars: [
-        { sym:'s',  html:'s',             name:'displacement',     unit:'m'    },
-        { sym:'v',  html:'v',             name:'final velocity',   unit:'m/s'  },
-        { sym:'v0', html:'v<sub>0</sub>', name:'initial velocity', unit:'m/s'  },
-        { sym:'t',  html:'t',             name:'time',             unit:'s'    },
-      ],
-      solve: {
-        s:  k => R( 0.5*(k.v+k.v0)*k.t,  ['s = ½(v + v₀)t',  `= ½(${k.v}+${k.v0})·${k.t}`] ),
-        v:  k => R( 2*k.s/k.t - k.v0,    ['v = 2s/t − v₀',   `= 2·${k.s}/${k.t} − ${k.v0}`] ),
-        v0: k => R( 2*k.s/k.t - k.v,     ['v₀ = 2s/t − v',   `= 2·${k.s}/${k.t} − ${k.v}`] ),
-        t:  k => R( 2*k.s/(k.v+k.v0),    ['t = 2s / (v+v₀)', `= 2·${k.s} / (${k.v}+${k.v0})`] ),
-      }
-    },
-    {
-      id: 'l5', name: 'displacement (no v₀)',
-      html: 's = vt − ½at<sup>2</sup>',
-      desc: 'Displacement with final velocity — no initial velocity needed',
-      vars: [
-        { sym:'s',  html:'s',  name:'displacement',   unit:'m'    },
-        { sym:'v',  html:'v',  name:'final velocity', unit:'m/s'  },
-        { sym:'a',  html:'a',  name:'acceleration',   unit:'m/s²' },
-        { sym:'t',  html:'t',  name:'time',           unit:'s'    },
-      ],
-      solve: {
-        s: k => R( k.v*k.t - 0.5*k.a*k.t**2,        ['s = vt − ½at²', `= (${k.v})(${k.t}) − ½(${k.a})(${k.t})²`] ),
-        v: k => R( (k.s + 0.5*k.a*k.t**2) / k.t,     ['v = (s + ½at²) / t', `= (${k.s} + ½·${k.a}·${k.t}²) / ${k.t}`] ),
-        a: k => R( 2*(k.v*k.t - k.s) / k.t**2,       ['a = 2(vt − s) / t²', `= 2(${k.v}·${k.t} − ${k.s}) / ${k.t}²`] ),
-        t: k => quadratic(-k.a/2, k.v, -k.s,          's = vt − ½at²  →  ½at² − vt + s = 0'),
-      }
-    },
-  ],
-  circular: [
-    {
-      id: 'c1', name: 'linear & angular velocity',
-      html: 'v = rω',
-      desc: 'Linear velocity from radius and angular velocity',
-      vars: [
-        { sym:'v', html:'v',  name:'linear velocity',  unit:'m/s'   },
-        { sym:'r', html:'r',  name:'radius',           unit:'m'     },
-        { sym:'w', html:'ω', name:'angular velocity', unit:'rad/s' },
-      ],
-      solve: {
-        v: k => R( k.r*k.w,  ['v = rω',    `= ${k.r} × ${k.w}`] ),
-        r: k => R( k.v/k.w,  ['r = v / ω', `= ${k.v} / ${k.w}`] ),
-        w: k => R( k.v/k.r,  ['ω = v / r', `= ${k.v} / ${k.r}`] ),
-      }
-    },
-    {
-      id: 'c2', name: 'centripetal accel. (linear)',
-      html: 'a<sub>c</sub> = v<sup>2</sup>/r',
-      desc: 'Centripetal acceleration using linear velocity and radius',
-      vars: [
-        { sym:'ac', html:'a<sub>c</sub>', name:'centripetal accel.', unit:'m/s²' },
-        { sym:'v',  html:'v',             name:'linear velocity',    unit:'m/s'  },
-        { sym:'r',  html:'r',             name:'radius',             unit:'m'    },
-      ],
-      solve: {
-        ac: k => R( k.v**2/k.r,           ['aᴄ = v²/r',    `= ${k.v}² / ${k.r}`] ),
-        v:  k => { if(k.ac*k.r<0) throw'aᴄ·r < 0 — no real solution'; return R(Math.sqrt(k.ac*k.r), ['v = √(aᴄ·r)', `= √(${k.ac} × ${k.r})`]); },
-        r:  k => R( k.v**2/k.ac,          ['r = v²/aᴄ',    `= ${k.v}² / ${k.ac}`] ),
-      }
-    },
-    {
-      id: 'c3', name: 'centripetal accel. (angular)',
-      html: 'a<sub>c</sub> = rω<sup>2</sup>',
-      desc: 'Centripetal acceleration using radius and angular velocity',
-      vars: [
-        { sym:'ac', html:'a<sub>c</sub>', name:'centripetal accel.', unit:'m/s²' },
-        { sym:'r',  html:'r',             name:'radius',             unit:'m'    },
-        { sym:'w',  html:'ω',        name:'angular velocity',   unit:'rad/s' },
-      ],
-      solve: {
-        ac: k => R( k.r*k.w**2,           ['aᴄ = rω²',    `= ${k.r} × ${k.w}²`] ),
-        r:  k => R( k.ac/k.w**2,          ['r = aᴄ/ω²',   `= ${k.ac} / ${k.w}²`] ),
-        w:  k => { if(k.ac/k.r<0) throw'aᴄ/r < 0 — no real solution'; return R(Math.sqrt(k.ac/k.r), ['ω = √(aᴄ/r)', `= √(${k.ac} / ${k.r})`]); },
-      }
-    },
-    {
-      id: 'c4', name: 'angular velocity–time',
-      html: 'ω = ω<sub>0</sub> + αt',
-      desc: 'Angular velocity from initial ω, angular acceleration, and time',
-      vars: [
-        { sym:'w',  html:'ω',               name:'angular velocity',         unit:'rad/s'  },
-        { sym:'w0', html:'ω<sub>0</sub>',   name:'initial angular velocity', unit:'rad/s'  },
-        { sym:'al', html:'α',               name:'angular acceleration',     unit:'rad/s²' },
-        { sym:'t',  html:'t',                    name:'time',                     unit:'s'      },
-      ],
-      solve: {
-        w:  k => R( k.w0+k.al*k.t,       ['ω = ω₀ + αt', `= ${k.w0} + (${k.al})(${k.t})`] ),
-        w0: k => R( k.w-k.al*k.t,        ['ω₀ = ω − αt', `= ${k.w} − (${k.al})(${k.t})`] ),
-        al: k => R( (k.w-k.w0)/k.t,      ['α = (ω − ω₀) / t', `= (${k.w} − ${k.w0}) / ${k.t}`] ),
-        t:  k => R( (k.w-k.w0)/k.al,     ['t = (ω − ω₀) / α', `= (${k.w} − ${k.w0}) / ${k.al}`] ),
-      }
-    },
-    {
-      id: 'c5', name: 'angular displ. (no ω)',
-      html: 'θ = ω<sub>0</sub>t + ½αt<sup>2</sup>',
-      desc: 'Angular displacement without knowing final angular velocity',
-      vars: [
-        { sym:'th', html:'θ',               name:'angular displacement',     unit:'rad'    },
-        { sym:'w0', html:'ω<sub>0</sub>',   name:'initial angular velocity', unit:'rad/s'  },
-        { sym:'al', html:'α',               name:'angular acceleration',     unit:'rad/s²' },
-        { sym:'t',  html:'t',                    name:'time',                     unit:'s'      },
-      ],
-      solve: {
-        th: k => R( k.w0*k.t+0.5*k.al*k.t**2,           ['θ = ω₀t + ½αt²', `= (${k.w0})(${k.t}) + ½(${k.al})(${k.t})²`] ),
-        w0: k => R( (k.th-0.5*k.al*k.t**2)/k.t,          ['ω₀ = (θ − ½αt²) / t', `= (${k.th} − ½·${k.al}·${k.t}²) / ${k.t}`] ),
-        al: k => R( 2*(k.th-k.w0*k.t)/k.t**2,            ['α = 2(θ − ω₀t) / t²', `= 2(${k.th} − ${k.w0}·${k.t}) / ${k.t}²`] ),
-        t:  k => quadratic(k.al/2, k.w0, -k.th,           'θ = ω₀t + ½αt²  →  ½αt² + ω₀t − θ = 0'),
-      }
-    },
-    {
-      id: 'c6', name: 'angular timeless equation',
-      html: 'ω<sup>2</sup> = ω<sub>0</sub><sup>2</sup> + 2αθ',
-      desc: 'Angular velocity without time — ω, ω₀, α, and θ',
-      vars: [
-        { sym:'w',  html:'ω',               name:'angular velocity',         unit:'rad/s'  },
-        { sym:'w0', html:'ω<sub>0</sub>',   name:'initial angular velocity', unit:'rad/s'  },
-        { sym:'al', html:'α',               name:'angular acceleration',     unit:'rad/s²' },
-        { sym:'th', html:'θ',               name:'angular displacement',     unit:'rad'    },
-      ],
-      solve: {
-        w:  k => { const q=k.w0**2+2*k.al*k.th; if(q<0) throw'ω² < 0 — no real solution'; return R(Math.sqrt(q), ['ω = √(ω₀² + 2αθ)', `= √(${k.w0}² + 2·${k.al}·${k.th}) = √${q}`]); },
-        w0: k => { const q=k.w**2-2*k.al*k.th;  if(q<0) throw'ω₀² < 0 — no real solution'; return R(Math.sqrt(q), ['ω₀ = √(ω² − 2αθ)', `= √(${k.w}² − 2·${k.al}·${k.th}) = √${q}`]); },
-        al: k => R( (k.w**2-k.w0**2)/(2*k.th), ['α = (ω² − ω₀²) / (2θ)', `= (${k.w}² − ${k.w0}²) / (2·${k.th})`] ),
-        th: k => R( (k.w**2-k.w0**2)/(2*k.al), ['θ = (ω² − ω₀²) / (2α)', `= (${k.w}² − ${k.w0}²) / (2·${k.al})`] ),
-      }
-    },
-    {
-      id: 'c7', name: 'angular average velocity',
-      html: 'θ = ½(ω + ω<sub>0</sub>)t',
-      desc: 'Angular displacement via average ω — no α needed',
-      vars: [
-        { sym:'th', html:'θ',               name:'angular displacement',     unit:'rad'   },
-        { sym:'w',  html:'ω',               name:'angular velocity',         unit:'rad/s' },
-        { sym:'w0', html:'ω<sub>0</sub>',   name:'initial angular velocity', unit:'rad/s' },
-        { sym:'t',  html:'t',                    name:'time',                     unit:'s'     },
-      ],
-      solve: {
-        th: k => R( 0.5*(k.w+k.w0)*k.t,   ['θ = ½(ω + ω₀)t', `= ½(${k.w}+${k.w0})·${k.t}`] ),
-        w:  k => R( 2*k.th/k.t - k.w0,    ['ω = 2θ/t − ω₀',  `= 2·${k.th}/${k.t} − ${k.w0}`] ),
-        w0: k => R( 2*k.th/k.t - k.w,     ['ω₀ = 2θ/t − ω',  `= 2·${k.th}/${k.t} − ${k.w}`] ),
-        t:  k => R( 2*k.th/(k.w+k.w0),    ['t = 2θ / (ω+ω₀)', `= 2·${k.th} / (${k.w}+${k.w0})`] ),
-      }
-    },
-    {
-      id: 'c8', name: 'period',
-      html: 'T = 2π/ω',
-      desc: 'Period of circular motion from angular velocity',
-      vars: [
-        { sym:'T', html:'T',      name:'period',           unit:'s'     },
-        { sym:'w', html:'ω', name:'angular velocity', unit:'rad/s' },
-      ],
-      solve: {
-        T: k => R( 2*Math.PI/k.w, ['T = 2π / ω', `= 2π / ${k.w}`] ),
-        w: k => R( 2*Math.PI/k.T, ['ω = 2π / T', `= 2π / ${k.T}`] ),
-      }
-    },
-    {
-      id: 'c9', name: 'frequency',
-      html: 'f = 1/T',
-      desc: 'Frequency is the reciprocal of period',
-      vars: [
-        { sym:'f', html:'f', name:'frequency', unit:'Hz' },
-        { sym:'T', html:'T', name:'period',    unit:'s'  },
-      ],
-      solve: {
-        f: k => R( 1/k.T, ['f = 1/T', `= 1/${k.T}`] ),
-        T: k => R( 1/k.f, ['T = 1/f', `= 1/${k.f}`] ),
-      }
-    },
-  ]
-};
+var activeEq = null;
+var solveFor = null;
 
-// ── helpers ────────────────────────────────────────────────────────────────
-function R(val, steps) { return { val, steps }; }
+function R(val, steps) { return { val: val, steps: steps }; }
 
-function quadratic(a, b, c, note) {
+function quad(a, b, c, note) {
   if (Math.abs(a) < 1e-12) {
-    if (Math.abs(b) < 1e-12) throw 'Both coefficients are zero — indeterminate';
-    const val = -c / b;
-    if (val < -1e-9) throw 'No positive time solution';
-    return R(Math.max(0, val), [note, `Linear case (a≈0):  t = ${fmt(Math.max(0, val))}`]);
+    if (Math.abs(b) < 1e-12) throw new Error('Cannot solve: equation is degenerate');
+    var t = -c / b;
+    if (t < -1e-9) throw new Error('No positive time solution exists');
+    return R(Math.max(0, t), [note, 'Simplified (linear case): t = ' + fmt(Math.max(0, t))]);
   }
-  const disc = b*b - 4*a*c;
-  if (disc < 0) throw 'No real solution (discriminant < 0)';
-  const sq = Math.sqrt(disc);
-  const t1 = (-b + sq) / (2*a);
-  const t2 = (-b - sq) / (2*a);
-  const valid = [t1, t2].filter(t => t >= -1e-9).map(t => Math.max(0, t));
-  if (!valid.length) throw 'No positive time solution';
-  const val = Math.min(...valid);
-  return R(val, [
-    note,
-    `discriminant = ${fmt(disc)}`,
-    `t₁ = ${fmt(t1)},  t₂ = ${fmt(t2)}`,
-    `smallest positive root: t = ${fmt(val)}`,
-  ]);
+  var disc = b * b - 4 * a * c;
+  if (disc < 0) throw new Error('No real solution (discriminant < 0)');
+  var sq = Math.sqrt(disc);
+  var t1 = (-b + sq) / (2 * a);
+  var t2 = (-b - sq) / (2 * a);
+  var valid = [];
+  if (t1 >= -1e-9) valid.push(Math.max(0, t1));
+  if (t2 >= -1e-9) valid.push(Math.max(0, t2));
+  if (!valid.length) throw new Error('No positive time solution exists');
+  var t = Math.min.apply(null, valid);
+  return R(t, [note, 'disc = ' + fmt(disc), 't1 = ' + fmt(t1) + ',  t2 = ' + fmt(t2), 'smallest positive root: t = ' + fmt(t)]);
 }
 
 function fmt(v) {
-  if (!isFinite(v)) return '—';
+  if (!isFinite(v)) return 'undefined';
   if (v === 0) return '0';
-  const a = Math.abs(v);
+  var a = Math.abs(v);
   if (a >= 1e6 || a < 0.0001) return parseFloat(v.toPrecision(5)).toExponential();
   return parseFloat(v.toPrecision(6)).toString();
 }
 
-// ── state ──────────────────────────────────────────────────────────────────
-let activeEq = null;
-let solveFor = null;
+var EQ = {
+  linear: [
+    { id:'l1', name:'velocity-time',
+      html:'v = v<sub>0</sub> + at',
+      desc:'Final velocity from initial velocity, acceleration, and time',
+      vars:[
+        {sym:'v',  html:'v',             name:'final velocity',   unit:'m/s'},
+        {sym:'v0', html:'v<sub>0</sub>', name:'initial velocity', unit:'m/s'},
+        {sym:'a',  html:'a',             name:'acceleration',     unit:'m/s²'},
+        {sym:'t',  html:'t',             name:'time',             unit:'s'}
+      ],
+      solve:{
+        v:  function(k){var r=k.v0+k.a*k.t; return R(r,['v = v0 + a*t','= '+fmt(k.v0)+' + ('+fmt(k.a)+')('+fmt(k.t)+')','= '+fmt(r)]);},
+        v0: function(k){var r=k.v-k.a*k.t; return R(r,['v0 = v - a*t','= '+fmt(k.v)+' - ('+fmt(k.a)+')('+fmt(k.t)+')','= '+fmt(r)]);},
+        a:  function(k){var r=(k.v-k.v0)/k.t; return R(r,['a = (v - v0) / t','= ('+fmt(k.v)+' - '+fmt(k.v0)+') / '+fmt(k.t),'= '+fmt(r)]);},
+        t:  function(k){var r=(k.v-k.v0)/k.a; return R(r,['t = (v - v0) / a','= ('+fmt(k.v)+' - '+fmt(k.v0)+') / '+fmt(k.a),'= '+fmt(r)]);}
+      }
+    },
+    { id:'l2', name:'displacement (no v)',
+      html:'s = v<sub>0</sub>t + ½at<sup>2</sup>',
+      desc:'Displacement without knowing final velocity',
+      vars:[
+        {sym:'s',  html:'s',             name:'displacement',     unit:'m'},
+        {sym:'v0', html:'v<sub>0</sub>', name:'initial velocity', unit:'m/s'},
+        {sym:'a',  html:'a',             name:'acceleration',     unit:'m/s²'},
+        {sym:'t',  html:'t',             name:'time',             unit:'s'}
+      ],
+      solve:{
+        s:  function(k){var r=k.v0*k.t+0.5*k.a*k.t*k.t; return R(r,['s = v0*t + (1/2)*a*t^2','= '+fmt(k.v0)+'*'+fmt(k.t)+' + 0.5*'+fmt(k.a)+'*'+fmt(k.t)+'^2','= '+fmt(r)]);},
+        v0: function(k){var r=(k.s-0.5*k.a*k.t*k.t)/k.t; return R(r,['v0 = (s - (1/2)*a*t^2) / t','= ('+fmt(k.s)+' - 0.5*'+fmt(k.a)+'*'+fmt(k.t)+'^2) / '+fmt(k.t),'= '+fmt(r)]);},
+        a:  function(k){var r=2*(k.s-k.v0*k.t)/(k.t*k.t); return R(r,['a = 2*(s - v0*t) / t^2','= 2*('+fmt(k.s)+' - '+fmt(k.v0)+'*'+fmt(k.t)+') / '+fmt(k.t)+'^2','= '+fmt(r)]);},
+        t:  function(k){return quad(k.a/2, k.v0, -k.s, '(a/2)*t^2 + v0*t - s = 0');}
+      }
+    },
+    { id:'l3', name:'timeless equation',
+      html:'v<sup>2</sup> = v<sub>0</sub><sup>2</sup> + 2as',
+      desc:'Velocity, acceleration, displacement — no time needed',
+      vars:[
+        {sym:'v',  html:'v',             name:'final velocity',   unit:'m/s'},
+        {sym:'v0', html:'v<sub>0</sub>', name:'initial velocity', unit:'m/s'},
+        {sym:'a',  html:'a',             name:'acceleration',     unit:'m/s²'},
+        {sym:'s',  html:'s',             name:'displacement',     unit:'m'}
+      ],
+      solve:{
+        v:  function(k){var q=k.v0*k.v0+2*k.a*k.s; if(q<0) throw new Error('v^2 would be negative — no real solution'); var r=Math.sqrt(q); return R(r,['v = sqrt(v0^2 + 2*a*s)','= sqrt('+fmt(k.v0)+'^2 + 2*'+fmt(k.a)+'*'+fmt(k.s)+')','= '+fmt(r)]);},
+        v0: function(k){var q=k.v*k.v-2*k.a*k.s; if(q<0) throw new Error('v0^2 would be negative — no real solution'); var r=Math.sqrt(q); return R(r,['v0 = sqrt(v^2 - 2*a*s)','= sqrt('+fmt(k.v)+'^2 - 2*'+fmt(k.a)+'*'+fmt(k.s)+')','= '+fmt(r)]);},
+        a:  function(k){var r=(k.v*k.v-k.v0*k.v0)/(2*k.s); return R(r,['a = (v^2 - v0^2) / (2*s)','= ('+fmt(k.v)+'^2 - '+fmt(k.v0)+'^2) / (2*'+fmt(k.s)+')','= '+fmt(r)]);},
+        s:  function(k){var r=(k.v*k.v-k.v0*k.v0)/(2*k.a); return R(r,['s = (v^2 - v0^2) / (2*a)','= ('+fmt(k.v)+'^2 - '+fmt(k.v0)+'^2) / (2*'+fmt(k.a)+')','= '+fmt(r)]);}
+      }
+    },
+    { id:'l4', name:'average velocity',
+      html:'s = ½(v + v<sub>0</sub>)t',
+      desc:'Displacement via average velocity — no acceleration needed',
+      vars:[
+        {sym:'s',  html:'s',             name:'displacement',     unit:'m'},
+        {sym:'v',  html:'v',             name:'final velocity',   unit:'m/s'},
+        {sym:'v0', html:'v<sub>0</sub>', name:'initial velocity', unit:'m/s'},
+        {sym:'t',  html:'t',             name:'time',             unit:'s'}
+      ],
+      solve:{
+        s:  function(k){var r=0.5*(k.v+k.v0)*k.t; return R(r,['s = (1/2)*(v + v0)*t','= 0.5*('+fmt(k.v)+' + '+fmt(k.v0)+')*'+fmt(k.t),'= '+fmt(r)]);},
+        v:  function(k){var r=2*k.s/k.t-k.v0; return R(r,['v = 2*s/t - v0','= 2*'+fmt(k.s)+'/'+fmt(k.t)+' - '+fmt(k.v0),'= '+fmt(r)]);},
+        v0: function(k){var r=2*k.s/k.t-k.v; return R(r,['v0 = 2*s/t - v','= 2*'+fmt(k.s)+'/'+fmt(k.t)+' - '+fmt(k.v),'= '+fmt(r)]);},
+        t:  function(k){var r=2*k.s/(k.v+k.v0); return R(r,['t = 2*s / (v + v0)','= 2*'+fmt(k.s)+' / ('+fmt(k.v)+' + '+fmt(k.v0)+')','= '+fmt(r)]);}
+      }
+    },
+    { id:'l5', name:'displacement (no v0)',
+      html:'s = vt − ½at<sup>2</sup>',
+      desc:'Displacement with final velocity — no initial velocity needed',
+      vars:[
+        {sym:'s', html:'s', name:'displacement',   unit:'m'},
+        {sym:'v', html:'v', name:'final velocity', unit:'m/s'},
+        {sym:'a', html:'a', name:'acceleration',   unit:'m/s²'},
+        {sym:'t', html:'t', name:'time',           unit:'s'}
+      ],
+      solve:{
+        s: function(k){var r=k.v*k.t-0.5*k.a*k.t*k.t; return R(r,['s = v*t - (1/2)*a*t^2','= '+fmt(k.v)+'*'+fmt(k.t)+' - 0.5*'+fmt(k.a)+'*'+fmt(k.t)+'^2','= '+fmt(r)]);},
+        v: function(k){var r=(k.s+0.5*k.a*k.t*k.t)/k.t; return R(r,['v = (s + (1/2)*a*t^2) / t','= ('+fmt(k.s)+' + 0.5*'+fmt(k.a)+'*'+fmt(k.t)+'^2) / '+fmt(k.t),'= '+fmt(r)]);},
+        a: function(k){var r=2*(k.v*k.t-k.s)/(k.t*k.t); return R(r,['a = 2*(v*t - s) / t^2','= 2*('+fmt(k.v)+'*'+fmt(k.t)+' - '+fmt(k.s)+') / '+fmt(k.t)+'^2','= '+fmt(r)]);},
+        t: function(k){return quad(k.a/2, -k.v, k.s, '(a/2)*t^2 - v*t + s = 0');}
+      }
+    }
+  ],
+  circular: [
+    { id:'c1', name:'linear & angular velocity',
+      html:'v = rω',
+      desc:'Linear velocity from radius and angular velocity',
+      vars:[
+        {sym:'v', html:'v',       name:'linear velocity',  unit:'m/s'},
+        {sym:'r', html:'r',       name:'radius',           unit:'m'},
+        {sym:'w', html:'ω', name:'angular velocity', unit:'rad/s'}
+      ],
+      solve:{
+        v: function(k){var r=k.r*k.w; return R(r,['v = r * w','= '+fmt(k.r)+' * '+fmt(k.w),'= '+fmt(r)]);},
+        r: function(k){var r=k.v/k.w; return R(r,['r = v / w','= '+fmt(k.v)+' / '+fmt(k.w),'= '+fmt(r)]);},
+        w: function(k){var r=k.v/k.r; return R(r,['w = v / r','= '+fmt(k.v)+' / '+fmt(k.r),'= '+fmt(r)]);}
+      }
+    },
+    { id:'c2', name:'centripetal accel. (linear)',
+      html:'a<sub>c</sub> = v<sup>2</sup>/r',
+      desc:'Centripetal acceleration using linear velocity and radius',
+      vars:[
+        {sym:'ac', html:'a<sub>c</sub>', name:'centripetal accel.', unit:'m/s²'},
+        {sym:'v',  html:'v',             name:'linear velocity',    unit:'m/s'},
+        {sym:'r',  html:'r',             name:'radius',             unit:'m'}
+      ],
+      solve:{
+        ac: function(k){var r=k.v*k.v/k.r; return R(r,['ac = v^2 / r','= '+fmt(k.v)+'^2 / '+fmt(k.r),'= '+fmt(r)]);},
+        v:  function(k){var q=k.ac*k.r; if(q<0) throw new Error('ac*r is negative — no real solution'); var r=Math.sqrt(q); return R(r,['v = sqrt(ac * r)','= sqrt('+fmt(k.ac)+'*'+fmt(k.r)+')','= '+fmt(r)]);},
+        r:  function(k){var r=k.v*k.v/k.ac; return R(r,['r = v^2 / ac','= '+fmt(k.v)+'^2 / '+fmt(k.ac),'= '+fmt(r)]);}
+      }
+    },
+    { id:'c3', name:'centripetal accel. (angular)',
+      html:'a<sub>c</sub> = rω<sup>2</sup>',
+      desc:'Centripetal acceleration using radius and angular velocity',
+      vars:[
+        {sym:'ac', html:'a<sub>c</sub>', name:'centripetal accel.', unit:'m/s²'},
+        {sym:'r',  html:'r',             name:'radius',             unit:'m'},
+        {sym:'w',  html:'ω',       name:'angular velocity',   unit:'rad/s'}
+      ],
+      solve:{
+        ac: function(k){var r=k.r*k.w*k.w; return R(r,['ac = r * w^2','= '+fmt(k.r)+'*'+fmt(k.w)+'^2','= '+fmt(r)]);},
+        r:  function(k){var r=k.ac/(k.w*k.w); return R(r,['r = ac / w^2','= '+fmt(k.ac)+'/'+fmt(k.w)+'^2','= '+fmt(r)]);},
+        w:  function(k){var q=k.ac/k.r; if(q<0) throw new Error('ac/r is negative — no real solution'); var r=Math.sqrt(q); return R(r,['w = sqrt(ac / r)','= sqrt('+fmt(k.ac)+'/'+fmt(k.r)+')','= '+fmt(r)]);}
+      }
+    },
+    { id:'c4', name:'angular velocity-time',
+      html:'ω = ω<sub>0</sub> + αt',
+      desc:'Angular velocity from initial ω, angular acceleration, and time',
+      vars:[
+        {sym:'w',  html:'ω',             name:'angular velocity',         unit:'rad/s'},
+        {sym:'w0', html:'ω<sub>0</sub>', name:'initial angular velocity', unit:'rad/s'},
+        {sym:'al', html:'α',             name:'angular acceleration',     unit:'rad/s²'},
+        {sym:'t',  html:'t',                  name:'time',                     unit:'s'}
+      ],
+      solve:{
+        w:  function(k){var r=k.w0+k.al*k.t; return R(r,['w = w0 + al*t','= '+fmt(k.w0)+' + '+fmt(k.al)+'*'+fmt(k.t),'= '+fmt(r)]);},
+        w0: function(k){var r=k.w-k.al*k.t; return R(r,['w0 = w - al*t','= '+fmt(k.w)+' - '+fmt(k.al)+'*'+fmt(k.t),'= '+fmt(r)]);},
+        al: function(k){var r=(k.w-k.w0)/k.t; return R(r,['al = (w - w0) / t','= ('+fmt(k.w)+'-'+fmt(k.w0)+') / '+fmt(k.t),'= '+fmt(r)]);},
+        t:  function(k){var r=(k.w-k.w0)/k.al; return R(r,['t = (w - w0) / al','= ('+fmt(k.w)+'-'+fmt(k.w0)+') / '+fmt(k.al),'= '+fmt(r)]);}
+      }
+    },
+    { id:'c5', name:'angular displ. (no w)',
+      html:'θ = ω<sub>0</sub>t + ½αt<sup>2</sup>',
+      desc:'Angular displacement without knowing final angular velocity',
+      vars:[
+        {sym:'th', html:'θ',             name:'angular displacement',     unit:'rad'},
+        {sym:'w0', html:'ω<sub>0</sub>', name:'initial angular velocity', unit:'rad/s'},
+        {sym:'al', html:'α',             name:'angular acceleration',     unit:'rad/s²'},
+        {sym:'t',  html:'t',                  name:'time',                     unit:'s'}
+      ],
+      solve:{
+        th: function(k){var r=k.w0*k.t+0.5*k.al*k.t*k.t; return R(r,['th = w0*t + (1/2)*al*t^2','= '+fmt(k.w0)+'*'+fmt(k.t)+' + 0.5*'+fmt(k.al)+'*'+fmt(k.t)+'^2','= '+fmt(r)]);},
+        w0: function(k){var r=(k.th-0.5*k.al*k.t*k.t)/k.t; return R(r,['w0 = (th - (1/2)*al*t^2) / t','= ('+fmt(k.th)+' - 0.5*'+fmt(k.al)+'*'+fmt(k.t)+'^2) / '+fmt(k.t),'= '+fmt(r)]);},
+        al: function(k){var r=2*(k.th-k.w0*k.t)/(k.t*k.t); return R(r,['al = 2*(th - w0*t) / t^2','= 2*('+fmt(k.th)+'-'+fmt(k.w0)+'*'+fmt(k.t)+') / '+fmt(k.t)+'^2','= '+fmt(r)]);},
+        t:  function(k){return quad(k.al/2, k.w0, -k.th, '(al/2)*t^2 + w0*t - th = 0');}
+      }
+    },
+    { id:'c6', name:'angular timeless equation',
+      html:'ω<sup>2</sup> = ω<sub>0</sub><sup>2</sup> + 2αθ',
+      desc:'Angular velocity without time — w, w0, al, and th',
+      vars:[
+        {sym:'w',  html:'ω',             name:'angular velocity',         unit:'rad/s'},
+        {sym:'w0', html:'ω<sub>0</sub>', name:'initial angular velocity', unit:'rad/s'},
+        {sym:'al', html:'α',             name:'angular acceleration',     unit:'rad/s²'},
+        {sym:'th', html:'θ',             name:'angular displacement',     unit:'rad'}
+      ],
+      solve:{
+        w:  function(k){var q=k.w0*k.w0+2*k.al*k.th; if(q<0) throw new Error('w^2 would be negative — no real solution'); var r=Math.sqrt(q); return R(r,['w = sqrt(w0^2 + 2*al*th)','= sqrt('+fmt(k.w0)+'^2 + 2*'+fmt(k.al)+'*'+fmt(k.th)+')','= '+fmt(r)]);},
+        w0: function(k){var q=k.w*k.w-2*k.al*k.th; if(q<0) throw new Error('w0^2 would be negative — no real solution'); var r=Math.sqrt(q); return R(r,['w0 = sqrt(w^2 - 2*al*th)','= sqrt('+fmt(k.w)+'^2 - 2*'+fmt(k.al)+'*'+fmt(k.th)+')','= '+fmt(r)]);},
+        al: function(k){var r=(k.w*k.w-k.w0*k.w0)/(2*k.th); return R(r,['al = (w^2 - w0^2) / (2*th)','= ('+fmt(k.w)+'^2-'+fmt(k.w0)+'^2) / (2*'+fmt(k.th)+')','= '+fmt(r)]);},
+        th: function(k){var r=(k.w*k.w-k.w0*k.w0)/(2*k.al); return R(r,['th = (w^2 - w0^2) / (2*al)','= ('+fmt(k.w)+'^2-'+fmt(k.w0)+'^2) / (2*'+fmt(k.al)+')','= '+fmt(r)]);}
+      }
+    },
+    { id:'c7', name:'angular average velocity',
+      html:'θ = ½(ω + ω<sub>0</sub>)t',
+      desc:'Angular displacement via average angular velocity — no α needed',
+      vars:[
+        {sym:'th', html:'θ',             name:'angular displacement',     unit:'rad'},
+        {sym:'w',  html:'ω',             name:'angular velocity',         unit:'rad/s'},
+        {sym:'w0', html:'ω<sub>0</sub>', name:'initial angular velocity', unit:'rad/s'},
+        {sym:'t',  html:'t',                  name:'time',                     unit:'s'}
+      ],
+      solve:{
+        th: function(k){var r=0.5*(k.w+k.w0)*k.t; return R(r,['th = (1/2)*(w + w0)*t','= 0.5*('+fmt(k.w)+'+'+fmt(k.w0)+')*'+fmt(k.t),'= '+fmt(r)]);},
+        w:  function(k){var r=2*k.th/k.t-k.w0; return R(r,['w = 2*th/t - w0','= 2*'+fmt(k.th)+'/'+fmt(k.t)+' - '+fmt(k.w0),'= '+fmt(r)]);},
+        w0: function(k){var r=2*k.th/k.t-k.w; return R(r,['w0 = 2*th/t - w','= 2*'+fmt(k.th)+'/'+fmt(k.t)+' - '+fmt(k.w),'= '+fmt(r)]);},
+        t:  function(k){var r=2*k.th/(k.w+k.w0); return R(r,['t = 2*th / (w + w0)','= 2*'+fmt(k.th)+' / ('+fmt(k.w)+'+'+fmt(k.w0)+')','= '+fmt(r)]);}
+      }
+    },
+    { id:'c8', name:'period',
+      html:'T = 2π/ω',
+      desc:'Period of circular motion from angular velocity',
+      vars:[
+        {sym:'T', html:'T',       name:'period',           unit:'s'},
+        {sym:'w', html:'ω', name:'angular velocity', unit:'rad/s'}
+      ],
+      solve:{
+        T: function(k){var r=2*Math.PI/k.w; return R(r,['T = 2*PI / w','= 2*PI / '+fmt(k.w),'= '+fmt(r)]);},
+        w: function(k){var r=2*Math.PI/k.T; return R(r,['w = 2*PI / T','= 2*PI / '+fmt(k.T),'= '+fmt(r)]);}
+      }
+    },
+    { id:'c9', name:'frequency',
+      html:'f = 1/T',
+      desc:'Frequency is the reciprocal of period',
+      vars:[
+        {sym:'f', html:'f', name:'frequency', unit:'Hz'},
+        {sym:'T', html:'T', name:'period',    unit:'s'}
+      ],
+      solve:{
+        f: function(k){var r=1/k.T; return R(r,['f = 1 / T','= 1 / '+fmt(k.T),'= '+fmt(r)]);},
+        T: function(k){var r=1/k.f; return R(r,['T = 1 / f','= 1 / '+fmt(k.f),'= '+fmt(r)]);}
+      }
+    }
+  ]
+};
 
-// ── build main card grid ───────────────────────────────────────────────────
 function buildMain() {
-  ['linear', 'circular'].forEach(cat => {
-    const grid = document.getElementById(cat + '-grid');
-    EQ[cat].forEach(eq => {
-      const card = document.createElement('div');
-      card.className = 'eq-card';
-      card.onclick = () => openEq(eq);
-      card.innerHTML =
-        `<div class="eq-titlebar">` +
-        `<div class="eq-dot dot-r"></div><div class="eq-dot dot-y"></div><div class="eq-dot dot-g"></div>` +
-        `<span class="eq-titlebar-label">${eq.name}</span></div>` +
-        `<div class="eq-preview"><div class="eq-formula">${eq.html}</div></div>` +
-        `<div class="eq-info">` +
-        `<div class="eq-name">${eq.name}</div>` +
-        `<div class="eq-desc">${eq.desc}</div>` +
-        `<div class="eq-cta">click to solve →</div></div>`;
-      grid.appendChild(card);
-    });
-  });
+  var cats = ['linear', 'circular'];
+  for (var ci = 0; ci < cats.length; ci++) {
+    var cat = cats[ci];
+    var grid = document.getElementById(cat + '-grid');
+    var eqs = EQ[cat];
+    for (var ei = 0; ei < eqs.length; ei++) {
+      (function(eq) {
+        var card = document.createElement('div');
+        card.className = 'eq-card';
+        card.onclick = function() { openEq(eq); };
+        card.innerHTML =
+          '<div class="eq-titlebar">'+
+          '<div class="eq-dot dot-r"></div><div class="eq-dot dot-y"></div><div class="eq-dot dot-g"></div>'+
+          '<span class="eq-titlebar-label">'+eq.name+'</span></div>'+
+          '<div class="eq-preview"><div class="eq-formula">'+eq.html+'</div></div>'+
+          '<div class="eq-info">'+
+          '<div class="eq-name">'+eq.name+'</div>'+
+          '<div class="eq-desc">'+eq.desc+'</div>'+
+          '<div class="eq-cta">click to solve &#8594;</div></div>';
+        grid.appendChild(card);
+      })(eqs[ei]);
+    }
+  }
 }
 
-// ── open solver panel ──────────────────────────────────────────────────────
 function openEq(eq) {
   activeEq = eq;
   solveFor = null;
-
   document.getElementById('sv-name').textContent = eq.name;
   document.getElementById('sv-eq').innerHTML = eq.html;
   document.getElementById('sv-sub').textContent = eq.desc;
 
-  const sfGrid = document.getElementById('sf-grid');
+  var sfGrid = document.getElementById('sf-grid');
   sfGrid.innerHTML = '';
-  eq.vars.forEach(v => {
-    const btn = document.createElement('button');
-    btn.className = 'sf-btn';
-    btn.id = 'sf-' + v.sym;
-    btn.onclick = () => pickSolveFor(v.sym);
-    btn.innerHTML = `<span>${v.html}</span><span class="sf-hint">${v.name}</span>`;
-    sfGrid.appendChild(btn);
-  });
+  for (var i = 0; i < eq.vars.length; i++) {
+    (function(v) {
+      var btn = document.createElement('button');
+      btn.className = 'sf-btn';
+      btn.id = 'sf-' + v.sym;
+      btn.innerHTML = '<span>'+v.html+'</span><span class="sf-hint">'+v.name+'</span>';
+      btn.onclick = function() { pickSolveFor(v.sym); };
+      sfGrid.appendChild(btn);
+    })(eq.vars[i]);
+  }
 
   buildInputs(null);
   document.getElementById('result-panel').style.display = 'none';
-
   document.getElementById('main-view').style.display = 'none';
-  document.getElementById('solver-view').style.display = '';
-  const bb = document.getElementById('back-btn');
-  bb.style.display = 'flex';
+  document.getElementById('solver-view').style.display = 'block';
+  document.getElementById('back-btn').style.display = 'flex';
   window.scrollTo(0, 0);
 }
 
 function pickSolveFor(sym) {
   solveFor = sym;
-  document.querySelectorAll('.sf-btn').forEach(b => b.classList.remove('active'));
+  var btns = document.querySelectorAll('.sf-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
   document.getElementById('sf-' + sym).classList.add('active');
   buildInputs(sym);
   document.getElementById('result-panel').style.display = 'none';
 }
 
 function buildInputs(excludeSym) {
-  const grid = document.getElementById('inputs-grid');
-  const saved = {};
-  grid.querySelectorAll('input[data-sym]').forEach(i => { saved[i.dataset.sym] = i.value; });
+  var grid = document.getElementById('inputs-grid');
+  var saved = {};
+  var old = grid.querySelectorAll('input[data-sym]');
+  for (var i = 0; i < old.length; i++) saved[old[i].dataset.sym] = old[i].value;
   grid.innerHTML = '';
-  activeEq.vars.forEach(v => {
-    if (v.sym === excludeSym) return;
-    const g = document.createElement('div');
+  var vars = activeEq.vars;
+  for (var j = 0; j < vars.length; j++) {
+    var v = vars[j];
+    if (v.sym === excludeSym) continue;
+    var g = document.createElement('div');
     g.className = 'inp-group';
+    var prev = saved[v.sym] || '';
     g.innerHTML =
-      `<label><span class="inp-lbl">${v.html}</span>` +
-      `<span class="inp-meta">— ${v.name} (${v.unit})</span></label>` +
-      `<input type="number" step="any" class="field" data-sym="${v.sym}" id="inp-${v.sym}" placeholder="enter value" value="${saved[v.sym] || ''}">`;
+      '<label><span class="inp-lbl">'+v.html+'</span>'+
+      '<span class="inp-meta"> &#8212; '+v.name+' ('+v.unit+')</span></label>'+
+      '<input type="number" step="any" class="field" data-sym="'+v.sym+'" id="inp-'+v.sym+'" placeholder="enter value" value="'+prev+'">';
     grid.appendChild(g);
-  });
+  }
 }
 
-// ── calculate ──────────────────────────────────────────────────────────────
 function calculate() {
   if (!activeEq) return;
   if (!solveFor) { showErr('Select a variable to solve for first.'); return; }
-
-  const known = {};
-  const missing = [];
-  activeEq.vars.forEach(v => {
-    if (v.sym === solveFor) return;
-    const el = document.getElementById('inp-' + v.sym);
-    const val = parseFloat(el ? el.value : '');
-    if (isNaN(val)) { missing.push(v.name); return; }
-    known[v.sym] = val;
-  });
+  var known = {};
+  var missing = [];
+  var vars = activeEq.vars;
+  for (var i = 0; i < vars.length; i++) {
+    var v = vars[i];
+    if (v.sym === solveFor) continue;
+    var el = document.getElementById('inp-' + v.sym);
+    var val = el ? parseFloat(el.value) : NaN;
+    if (isNaN(val)) missing.push(v.name);
+    else known[v.sym] = val;
+  }
   if (missing.length) { showErr('Missing: ' + missing.join(', ')); return; }
-
-  const target = activeEq.vars.find(v => v.sym === solveFor);
+  var target = null;
+  for (var j = 0; j < vars.length; j++) { if (vars[j].sym === solveFor) { target = vars[j]; break; } }
   try {
-    const res = activeEq.solve[solveFor](known);
-    if (!isFinite(res.val)) { showErr('Result undefined — check for division by zero.'); return; }
+    var res = activeEq.solve[solveFor](known);
+    if (!isFinite(res.val)) { showErr('Result is undefined &#8212; check for division by zero.'); return; }
     showResult(target, res);
   } catch(e) {
-    showErr(typeof e === 'string' ? e : e.message);
+    showErr(e.message || String(e));
   }
 }
 
 function showResult(target, res) {
-  const panel = document.getElementById('result-panel');
-  const stepsHtml = res.steps.map(s => `<div class="step">${s}</div>`).join('');
+  var stepsHtml = '';
+  for (var i = 0; i < res.steps.length; i++) stepsHtml += '<div class="step">'+res.steps[i]+'</div>';
   document.getElementById('result-body').innerHTML =
-    `<div class="res-banner ok">✓ Solved for <strong>${target.name}</strong></div>` +
-    `<div class="res-val-box">` +
-    `<div class="res-var">${target.html} =</div>` +
-    `<div class="res-num">${fmt(res.val)}</div>` +
-    `<div class="res-unit">${target.unit}</div></div>` +
-    `<div class="steps"><h4>Solution Steps</h4>${stepsHtml}</div>`;
-  panel.style.display = '';
+    '<div class="res-banner ok">&#10003; Solved for <strong>'+target.name+'</strong></div>'+
+    '<div class="res-val-box">'+
+    '<div class="res-var">'+target.html+' =</div>'+
+    '<div class="res-num">'+fmt(res.val)+'</div>'+
+    '<div class="res-unit">'+target.unit+'</div></div>'+
+    '<div class="steps"><h4>Working</h4>'+stepsHtml+'</div>';
+  var panel = document.getElementById('result-panel');
+  panel.style.display = 'block';
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function showErr(msg) {
-  const panel = document.getElementById('result-panel');
-  document.getElementById('result-body').innerHTML = `<div class="res-banner err">&#9888; ${msg}</div>`;
-  panel.style.display = '';
+  document.getElementById('result-body').innerHTML = '<div class="res-banner err">&#9888; '+msg+'</div>';
+  document.getElementById('result-panel').style.display = 'block';
 }
 
-// ── back to main ───────────────────────────────────────────────────────────
 function showMain() {
   document.getElementById('solver-view').style.display = 'none';
-  document.getElementById('main-view').style.display = '';
+  document.getElementById('main-view').style.display = 'block';
   document.getElementById('back-btn').style.display = 'none';
   window.scrollTo(0, 0);
 }
